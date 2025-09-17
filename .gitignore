@@ -1,0 +1,7 @@
+node_modules
+sh.sh
+.terraform
+terraform.tfstate
+terraform.tfstate*
+.terraform.tfstate*
+terraform.tfvars
