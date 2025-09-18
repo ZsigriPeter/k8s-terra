@@ -3,7 +3,6 @@ kind: Namespace
 metadata:
   name: webapp-ns
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -26,7 +25,10 @@ spec:
         - containerPort: 3000
         env:
         - name: MONGO_URI
-          value: "mongodb://mongo-web-service:27017/webappdb"
+          valueFrom:
+            secretKeyRef:
+              name: webapp-db-secret
+              key: MONGO_URI
 ---
 apiVersion: v1
 kind: Service
@@ -40,3 +42,14 @@ spec:
   - port: 80
     targetPort: 3000
   type: ClusterIP
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: webapp-db-secret
+  namespace: webapp-ns
+type: Opaque
+data:
+  # base64-encoded "mongodb://mongo-web-service.db-ns.svc.cluster.local:27017/webappdb"
+  MONGO_URI: bW9uZ29kOi8vbW9uZ28td2ViLXNlcnZpY2UuZGItbnMuc3ZjLmNsdXN0ZXIubG9jYWw6MjcwMTcvd2ViYXBwZGI=

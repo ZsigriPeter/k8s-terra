@@ -25,7 +25,10 @@ spec:
         - containerPort: 4000
         env:
         - name: MONGO_URI
-          value: "mongodb://mongo-auth-service:27017/authdb"
+          valueFrom:
+            secretKeyRef:
+              name: auth-db-secret
+              key: MONGO_URI
 ---
 apiVersion: v1
 kind: Service
@@ -39,3 +42,15 @@ spec:
   - port: 80
     targetPort: 4000
   type: ClusterIP
+
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-db-secret
+  namespace: authapi-ns
+type: Opaque
+data:
+  # base64-encoded "mongodb://mongo-auth-service.db-ns.svc.cluster.local:27017/authdb"
+  MONGO_URI: bW9uZ29kOi8vbW9uZ28tYXV0aC1zZXJ2aWNlLmRiLW5zLnN2Yy5jbHVzdGVyLmxvY2FsOjI3MDE3L2F1dGhkYg==

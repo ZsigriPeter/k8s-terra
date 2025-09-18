@@ -17,13 +17,13 @@ module "vpc" {
 
 # }
 
-# module "ecr" {
-#   source = "./modules/ecr"
+/* module "ecr" {
+  source = "./modules/ecr"
 
-#   region = var.region
-#   project_name = var.project_name
-#   profile = var.profile
-# }
+  region = var.region
+  project_name = var.project_name
+  profile = var.profile
+} */
 
 module "eks" {
   source = "./modules/eks"
