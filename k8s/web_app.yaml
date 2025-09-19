@@ -22,8 +22,10 @@ spec:
       - name: web-app
         image: 154744860201.dkr.ecr.eu-north-1.amazonaws.com/web_app:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
         env:
+        - name: IP_START
+          value: "10.0"
         - name: MONGO_URI
           valueFrom:
             secretKeyRef:
@@ -40,7 +42,7 @@ spec:
     app: web-app
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 80
   type: ClusterIP
 
 ---

@@ -24,6 +24,8 @@ spec:
         ports:
         - containerPort: 4000
         env:
+        - name: IP_START
+          value: "10.0"
         - name: MONGO_URI
           valueFrom:
             secretKeyRef:
